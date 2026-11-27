@@ -43,6 +43,25 @@ Functions inlined everywhere (`I_isupper`, `I_isalpha`, `I_isalnum`) or unused (
 between identified functions are where to look for the rest of a file, and reading decides (`semantic+differential`
 in `records/names.tsv`); the position alone identifies nothing.
 
+## Mouse input
+
+The Xbox reference has the command side (`CL_MouseMove`, `CL_GetMouseMovementWithSensitivity`,
+`CL_GetMouseMovement`) but no mouse layer: its `IN_ActivateMouse` is empty. The Store's PC layer is named from
+black-ops-2-decomp's, which it matches function for function (`records/names.tsv`):
+
+    IN_Frame 140336CD0 (IN_MouseMove inlined): GetCursorPos - last position
+      -> CL_MouseEvent 1400C94E0: a menu has the keys -> UI_MouseEvent 1402FB1F0, cursor free
+                                  else ClipCursor(window), mouseDx/mouseDy[mouseIndex] += dx, dy
+      -> SetCursorPos(window centre) when CL_MouseEvent asks
+    CreateCmd -> CL_MouseMove 1400C9640 -> CL_GetMouseMovementWithSensitivity 1400C90F0
+      (CL_GetMouseMovement inlined: m_filter averages the two slots; then
+       ((length / frame_msec) * cl_mouseAccel + sensitivity) * cgameFOVSensitivityScale)
+
+So the faithful game turns by the Windows cursor's movement: Windows' pointer speed and acceleration apply, a
+frame's movement is limited by the screen edge before the recentre, and the counts are read once per frame. That is
+the point black-ops-2-decomp's P0002 replaces (raw input on a thread of its own), with P0003 (MW2019 sensitivity) in
+`CL_MouseMove` and `CL_GetMouseMovementWithSensitivity`.
+
 ## What the port changed (from the imports and strings so far)
 
 - **Renderer:** still **Direct3D 9** (`d3d9.dll`), unlike BO2's Store build (D3D11). Audio through `DSOUND` and
